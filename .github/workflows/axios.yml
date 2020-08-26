@@ -6,7 +6,7 @@ jobs:
         runs-on: ubuntu-latest
         steps:
             - name: 'Call API'
-              uses: actionsflow/axios@v1
+              uses: actionsflow/axios@master
               id: api
               with:
                 url: https://reqres.in/api/users
