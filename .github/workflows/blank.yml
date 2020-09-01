@@ -37,5 +37,5 @@ jobs:
         run: echo "$MATRIX_CONTEXT"
       - name: Dump needs
         env:
-          TEST: ${{ (needs["init"].outputs.test) }}
+          TEST: ${{ (needs['init'].outputs.test) }}
         run: echo "$TEST"
