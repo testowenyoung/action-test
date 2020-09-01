@@ -4,7 +4,7 @@ jobs:
   init:
     runs-on: ubuntu-16.04
     outputs:
-      test: testvalue 
+      test: '{"key":{"key1":"value1"}}'
     steps:
       - run: echo hello
   one:
@@ -37,5 +37,5 @@ jobs:
         run: echo "$MATRIX_CONTEXT"
       - name: Dump needs
         env:
-          TEST: ${{ (needs['init'].outputs.test) }}
+          TEST: ${{ fromJson(needs['init'].outputs.test).key.key1 }}
         run: echo "$TEST"
