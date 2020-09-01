@@ -1,8 +1,13 @@
 on: push
 
 jobs:
+  init:
+    runs-on: ubuntu-16.04
+    outputs:
+      test: ${{github}} 
   one:
     runs-on: ubuntu-16.04
+    needs: ["init"]
     steps:
       - name: Dump GitHub context
         env:
@@ -27,4 +32,8 @@ jobs:
       - name: Dump matrix context
         env:
           MATRIX_CONTEXT: ${{ toJson(matrix) }}
+        run: echo "$MATRIX_CONTEXT"
+      - name: Dump needs
+        env:
+          TEST: ${{ toJson(needs.init.outputs.test) }}
         run: echo "$MATRIX_CONTEXT"
