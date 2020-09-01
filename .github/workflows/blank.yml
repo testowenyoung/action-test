@@ -4,7 +4,7 @@ jobs:
   init:
     runs-on: ubuntu-16.04
     outputs:
-      test: ${{github}} 
+      test: testvalue 
     steps:
       - run: echo hello
   one:
@@ -37,5 +37,5 @@ jobs:
         run: echo "$MATRIX_CONTEXT"
       - name: Dump needs
         env:
-          TEST: ${{ toJson(needs.init.outputs.test) }}
-        run: echo "$MATRIX_CONTEXT"
+          TEST: ${{ (needs["init"].outputs.test) }}
+        run: echo "$TEST"
