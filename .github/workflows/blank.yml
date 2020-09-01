@@ -6,6 +6,7 @@ jobs:
     outputs:
       test: '{"key":{"key1":"value1"}}'
       key: init
+      key1: test
     steps:
       - run: echo hello
   one:
@@ -39,4 +40,5 @@ jobs:
       - name: Dump needs
         env:
           TEST: ${{ fromJson(needs[needs.init.outputs.key].outputs.test).key.key1 }}
-        run: echo "$TEST"
+          ttt: ${{ secrets[needs.init.outputs.key1] }}
+        run: echo "$TEST" && echo $ttt
