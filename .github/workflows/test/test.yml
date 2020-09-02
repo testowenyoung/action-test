@@ -1,0 +1,44 @@
+on: push
+
+jobs:
+  init:
+    runs-on: ubuntu-16.04
+    outputs:
+      test: '{"key":{"key1":"value1"}}'
+      key: init
+      key1: test
+    steps:
+      - run: echo hello
+  one:
+    runs-on: ubuntu-16.04
+    needs: ["init"]
+    steps:
+      - name: Dump GitHub context
+        env:
+          GITHUB_CONTEXT: ${{ toJson(github) }}
+        run: echo "$GITHUB_CONTEXT"
+      - name: Dump job context
+        env:
+          JOB_CONTEXT: ${{ toJson(job) }}
+        run: echo "$JOB_CONTEXT"
+      - name: Dump steps context
+        env:
+          STEPS_CONTEXT: ${{ toJson(steps) }}
+        run: echo "$STEPS_CONTEXT"
+      - name: Dump runner context
+        env:
+          RUNNER_CONTEXT: ${{ toJson(runner) }}
+        run: echo "$RUNNER_CONTEXT"
+      - name: Dump strategy context
+        env:
+          STRATEGY_CONTEXT: ${{ toJson(strategy) }}
+        run: echo "$STRATEGY_CONTEXT"
+      - name: Dump matrix context
+        env:
+          MATRIX_CONTEXT: ${{ toJson(matrix) }}
+        run: echo "$MATRIX_CONTEXT"
+      - name: Dump needs
+        env:
+          TEST: ${{ fromJson(needs[needs.init.outputs.key].outputs.test).key.key1 }}
+          ttt: ${{ secrets[needs.init.outputs.key1] }}
+        run: echo "$TEST" && echo $ttt
